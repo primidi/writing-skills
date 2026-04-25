@@ -15,6 +15,7 @@ This repository contains seven specialized skills that can be used sequentially 
 5.  **`humanizer`**: Adjusts the writing to sound more natural, organic, and less "AI-generated".
 6.  **`seo-optimizer`**: Suggests keywords, meta descriptions, and formatting for search engines.
 7.  **`social-promoter`**: Generates promotional snippets and social media copy.
+8.  **`writing-director`**: Orchestrates the entire end-to-end workflow automatically.
 
 ## Universal Installation (Any AI Agent)
 
@@ -22,16 +23,20 @@ This repository contains seven specialized skills that can be used sequentially 
 You can use the `skills` CLI to install these directly into your agent's environment:
 
 ```bash
-# Install ALL skills from this repository
+# Install ALL skills from this repository (Recommended)
 npx skills add primidi/writing-skills
 
-# Or install a specific skill into your workspace
-npx skills add primidi/writing-skills@researcher
-npx skills add primidi/writing-skills@editor
-
-# For Claude Code specifically:
-# The skills will be added to your .claude/ directory automatically.
+# This will include the 'writing-director' which allows for one-shot workflows.
 ```
+
+## How to Use as a Single Workflow
+
+To run the entire pipeline at once, use the **`writing-director`** skill.
+
+**Example Prompt:**
+> "Use the **writing-director** skill to create a full article about [Topic]. Run the entire pipeline from research to social promotion automatically."
+
+The Director will then coordinate the internal transition between all other skills sequentially.
 
 ### 2. Manual Context Injection (Cursor, Windsurf, Copilot)
 Since each skill is a self-contained markdown file (`SKILL.md`), you can easily use them in IDE-based agents:
