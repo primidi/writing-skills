@@ -43,11 +43,15 @@ Since each skill is a self-contained markdown file (`SKILL.md`), you can easily 
 - **Cursor / Windsurf**: Copy the contents of a `SKILL.md` (e.g., `researcher/SKILL.md`) into your `.cursorrules` or `.windsurfrules` file, or simply `@` reference the file in chat (`@researcher/SKILL.md`).
 - **ChatGPT / GitHub Copilot**: Upload or paste the `SKILL.md` file as a system prompt instruction or reference it in the chat workspace.
 
-### 3. Local Installation (Gemini CLI)
-If you have the source files locally, you can install the packaged `.skill` files directly into Gemini CLI:
+### 3. Direct Gemini CLI Installation
+You can install these skills directly into the Gemini CLI from the remote GitHub repository using the `--path` flag, or locally if you have the source files:
 
 ```bash
-# Install from the dist directory
+# Install specific skills directly from GitHub (Remote)
+gemini skills install https://github.com/primidi/writing-skills.git --path writing-director --scope workspace
+gemini skills install https://github.com/primidi/writing-skills.git --path researcher --scope workspace
+
+# Or, if you have the source files locally:
 gemini skills install dist/humanizer.skill --scope workspace
 
 # Reload your skills in the interactive session
