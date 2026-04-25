@@ -19,7 +19,7 @@ This repository contains seven specialized skills that can be used sequentially 
 
 ## Universal Installation (Any AI Agent)
 
-### 1. Via Open Agent Skills Package Manager (Claude Code, Gemini CLI)
+### 1. Via Open Agent Skills Package Manager
 You can use the `skills` CLI to install these directly into your agent's environment:
 
 ```bash
