@@ -1,66 +1,53 @@
 # AI Agent Skills
 
-A collection of modular AI agent skills organized by category, designed to support various workflows from writing to development.
+A collection of modular AI agent skills organized by category, designed to support various workflows from writing to development. This repository follows a **Pragmatic Domain-Driven Design (DDD)** architecture to ensure modularity and clear communication between skills.
 
 These skills are built on the **Open Agent Skills Ecosystem** format, making them universally compatible with any modern AI agent (Claude Code, Gemini CLI, Cursor, Windsurf, Copilot, etc.).
 
-## Repository Structure
+## Repository Architecture: Pragmatic DDD
 
-Skills are organized into categories:
-- **`writing/`**: A complete human writing pipeline (research, drafting, editing, SEO, promotion).
+To support complex, orchestrated pipelines, the repository is structured into **Bounded Contexts** (categories):
 
-## The Writing Pipeline (`writing/`)
+-   **Bounded Contexts:** Each category (e.g., `writing/`) is a self-contained domain.
+-   **Ubiquitous Language (`DOMAIN.md`):** Each context contains a glossary and data contracts to ensure all skills use the same terminology.
+-   **Orchestrators (Application Services):** Each context has a "Director" skill that manages the sequential flow of data between specialized services.
+-   **Domain Services:** Individual skills (e.g., `researcher`, `drafter`) that perform specific, stateless tasks.
 
-This category contains specialized skills for the writing workflow:
+## The Writing Domain (`writing/`)
 
-1.  **`researcher`**: Gathers and synthesizes source material.
-2.  **`outliner`**: Structures topics, thesis, and headings.
-3.  **`drafter`**: Expands outlines into full drafts matching a desired tone.
-4.  **`prose-perfectionist`**: Refines copy for grammar, clarity, tone, and flow.
-5.  **`humanizer`**: Adjusts the writing to sound more natural, organic, and less "AI-generated".
-6.  **`seo-optimizer`**: Suggests keywords, meta descriptions, and formatting for search engines.
-7.  **`social-promoter`**: Generates promotional snippets and social media copy.
-8.  **`writing-director`**: Orchestrates the entire end-to-end workflow automatically.
+A complete 10-phase human writing pipeline orchestrated by the **`writing-director`**.
 
-## Universal Installation (Any AI Agent)
+1.  **`researcher`**: Gathers and synthesizes source material into a **Research Brief**.
+2.  **`voice-vanguard`**: Defines the specific **Persona** and character traits of the narrator.
+3.  **`outliner`**: Structures topics and thesis into a **Structural Outline**.
+4.  **`drafter`**: Expands outlines into full **Drafts** matching the chosen Persona.
+5.  **`humor-hacker`**: Injects specific humor styles (satire, sarcasm, etc.) into the content.
+6.  **`prose-perfectionist`**: Refines grammar, clarity, and narrative **Pacing**.
+7.  **`humanizer`**: Adjusts the writing to sound more natural and organic.
+8.  **`seo-optimizer`**: Aligns the content with **SEO Signals** and keyword targets.
+9.  **`social-promoter`**: Generates platform-specific **Social Snippets**.
+10. **`writing-director`**: The **Orchestrator** that manages the entire end-to-end workflow.
 
-### 1. Via Open Agent Skills Package Manager
-You can use the `skills` CLI to install these directly into your agent's environment:
+## Universal Installation
+
+### 1. Direct Gemini CLI Installation
+Install skills directly from the GitHub repository into your user or workspace scope:
 
 ```bash
-# Install the writing category from this repository
-npx skills add primidi/skills/writing
+# Install the entire writing context orchestrator
+gemini skills install https://github.com/primidi/skills.git --path writing/writing-director --scope user
+
+# Install specialized domain services
+gemini skills install https://github.com/primidi/skills.git --path writing/researcher --scope user
 ```
-
-## How to Use as a Single Workflow
-
-To run the entire writing pipeline at once, use the **`writing-director`** skill.
-
-**Example Prompt:**
-> "Use the **writing-director** skill to create a full article about [Topic]. Run the entire pipeline from research to social promotion automatically."
-
-The Director will then coordinate the internal transition between all other skills sequentially.
 
 ### 2. Manual Context Injection (Cursor, Windsurf, Copilot)
-Since each skill is a self-contained markdown file (`SKILL.md`), you can easily use them in IDE-based agents:
-- **Cursor / Windsurf**: Reference the file path (e.g., `@writing/researcher/SKILL.md`).
-- **ChatGPT / GitHub Copilot**: Upload or paste the `SKILL.md` file as a system prompt instruction.
-
-### 3. Direct Gemini CLI Installation
-You can install these skills directly into the Gemini CLI from the remote GitHub repository:
-
-```bash
-# Install specific skills directly from GitHub (Remote)
-gemini skills install https://github.com/primidi/skills.git --path writing/writing-director --scope workspace
-gemini skills install https://github.com/primidi/skills.git --path writing/researcher --scope workspace
-
-# Reload your skills in the interactive session
-/skills reload
-```
+Since each skill is a self-contained markdown file (`SKILL.md`), you can easily reference them:
+- **Cursor / Windsurf**: Reference the path (e.g., `@writing/researcher/SKILL.md`).
+- **Claude / ChatGPT**: Upload or paste the `DOMAIN.md` and `SKILL.md` files as system instructions.
 
 ## Development
 
-To modify these skills:
-1. Edit the `SKILL.md` files in each skill's respective category directory.
-2. If you are using Gemini CLI, repackage them using the Gemini CLI skill creator tools.
-3. If you are using the open agent ecosystem, simply commit and push your changes to GitHub. Your agent will pull the latest version the next time you run `npx skills update`.
+1.  **Define the Domain:** Start by updating the `DOMAIN.md` in the category folder with new terms or contracts.
+2.  **Create/Edit Skills:** Modify the `SKILL.md` files in each skill's respective directory.
+3.  **Update the Orchestrator:** Ensure the "Director" skill is aware of any new steps or data contracts.
